@@ -1,0 +1,20 @@
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v2beta2
+metadata:
+  name: hpa-resource-metrics-cpu
+  namespace: {{yourNamespace}}
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: {{youDeploymentName}}
+    apiVersion: v1
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+status: {}
